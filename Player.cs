@@ -17,10 +17,29 @@ namespace ShootingDice
         {
             // Call roll for "this" object and for the "other" object
             int myRoll = Roll();
-            int otherRoll = other.Roll();
+            int otherRoll = 0;
+            if (other is OneHigherPlayer) 
+            {
+                otherRoll = myRoll + 1;
+            }
+            else if (other is HumanPlayer)
+            {
+                Console.WriteLine("What's your dice number?");
+                otherRoll = int.Parse(Console.ReadLine());
+            }
+            else
+            {
+                otherRoll = other.Roll();
+            }
 
             Console.WriteLine($"{Name} rolls a {myRoll}");
             Console.WriteLine($"{other.Name} rolls a {otherRoll}");
+            
+            if (other is SmackTalkingPlayer)
+            {
+                Console.WriteLine($"{other.Name} says: {((SmackTalkingPlayer)other).Taunt}");
+            }
+
             if (myRoll > otherRoll)
             {
                 Console.WriteLine($"{Name} Wins!");
